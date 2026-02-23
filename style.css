@@ -1130,6 +1130,20 @@ body {
     padding: 0 16px;
   }
 
+  .header-left {
+    gap: 8px;
+    min-width: 0;
+    /* needed for flex text truncation */
+  }
+
+  .header-title {
+    font-size: 16px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 130px;
+  }
+
   .calendar-day {
     min-height: 60px;
     padding: 4px;
