@@ -54,9 +54,9 @@ document.addEventListener('DOMContentLoaded', () => {
   const themeSelect = document.getElementById('themeSelect');
   if (themeSelect) themeSelect.value = state.theme;
 
-  // Initial clock out check
-  setTimeout(checkAutoClockOut, 1000);
-  setInterval(checkAutoClockOut, 60000); // Check every minute
+  // Initial stats check
+  setTimeout(updateGlobalStats, 100);
+  setInterval(updateGlobalStats, 60000); // Check every minute
 });
 
 // ---- State Management ----
@@ -205,6 +205,7 @@ function switchView(viewName) {
   if (viewName === 'employees') renderEmployeeTable();
   if (viewName === 'analytics') renderAnalytics();
 
+  updateGlobalStats();
   render();
 }
 
@@ -330,11 +331,10 @@ function renderDashboard() {
         ? t(state.workMode === 'normal' ? 'shift.normal2' : 'shift.ramadan2')
         : escapeHTML(shift);
     const isLeave = status === 'leave';
-    const isFinished = status === 'finished';
 
     let shiftButtonsHtml = ``;
 
-    if (!isLeave && !isFinished) {
+    if (!isLeave) {
       shiftButtonsHtml = `
           <button class="shift-btn ${shift === 'opt1' ? 'active' : ''}"
                   onclick="setShift('${emp.id}', 'opt1')">${t(state.workMode === 'normal' ? 'shift.normal1' : 'shift.ramadan1')}</button>
@@ -382,8 +382,6 @@ function renderDashboard() {
                   onclick="setStatus('${emp.id}', 'remote')">🏠 <span data-i18n="btn.remote">${t('btn.remote')}</span></button>
           <button class="status-btn leave-btn ${status === 'leave' ? 'active' : ''}"
                   onclick="setStatus('${emp.id}', 'leave')">🌙 <span data-i18n="btn.leave">${t('btn.leave')}</span></button>
-          <button class="status-btn finished-btn ${status === 'finished' ? 'active' : ''}"
-                  onclick="setStatus('${emp.id}', 'finished')">🏁 <span data-i18n="btn.finished">${t('btn.finished')}</span></button>
         </div>
 
         <div class="shift-selector">
@@ -410,29 +408,15 @@ function setStatus(empId, status) {
   const today = getDateKey(new Date());
   const emp = state.employees.find(e => e.id === empId);
 
-  // Overtime detection
-  let isOvertime = false;
-  if (status === 'office' || status === 'remote') {
-    const shiftText = getShiftString(emp.defaultShift);
-    const endStr = shiftText.split('-')[1]?.trim();
-    if (endStr) {
-      const now = new Date();
-      const [h, m] = endStr.split(':').map(Number);
-      if (now.getHours() * 60 + now.getMinutes() >= h * 60 + m) {
-        isOvertime = true;
-      }
-    }
-  }
-
   if (!state.attendance[today]) state.attendance[today] = {};
 
   state.attendance[today][empId] = {
     status: status,
-    shift: state.attendance[today][empId]?.shift || getDefaultShift(emp),
-    overtime: isOvertime
+    shift: state.attendance[today][empId]?.shift || getDefaultShift(emp)
   };
 
   saveState();
+  updateGlobalStats();
   render();
   syncToSheets();
 }
@@ -460,45 +444,64 @@ function setShift(empId, shift) {
   syncToSheets();
 }
 
-// ---- Auto Clock-Out Logic ----
-function checkAutoClockOut() {
+// ---- Global Stats Logic ----
+function updateGlobalStats() {
   if (state.employees.length === 0) return;
 
   const today = getDateKey(new Date());
-  if (!state.attendance[today]) return;
+  const todayData = state.attendance[today] || {};
 
-  let changed = false;
+  let total = state.employees.length;
+  let office = 0;
+  let remote = 0;
+  let leave = 0;
+  let finished = 0;
+
   const now = new Date();
   const currentMinutes = now.getHours() * 60 + now.getMinutes();
 
   state.employees.forEach(emp => {
-    const record = state.attendance[today][emp.id];
-    // If no record exists today, do not auto-clock them out (they haven't checked in)
-    if (!record) return;
+    const record = todayData[emp.id];
+    let status = record ? record.status : getDefaultStatus(emp);
 
-    if (record.status !== 'leave' && record.status !== 'finished' && !record.overtime) {
-      const shiftText = getShiftString(record.shift || emp.defaultShift);
+    // Auto Finished check
+    let isFinished = false;
+    if (status !== 'leave') {
+      const shiftText = getShiftString(record?.shift || emp.defaultShift);
       const endTimeStr = shiftText.split('-')[1]?.trim();
       if (endTimeStr) {
         const [hours, mins] = endTimeStr.split(':').map(Number);
-        const endMinutes = hours * 60 + mins;
-        if (currentMinutes >= endMinutes) {
-          record.status = 'finished';
-          changed = true;
+        if (currentMinutes >= hours * 60 + mins) {
+          isFinished = true;
         }
       }
     }
+
+    if (status === 'leave') {
+      leave++;
+    } else if (isFinished) {
+      finished++;
+    } else if (status === 'office') {
+      office++;
+    } else if (status === 'remote') {
+      remote++;
+    }
   });
 
-  if (changed) {
-    saveState();
-    render();
-    if (state.currentView === 'analytics') renderAnalytics();
-    syncToSheets();
+  const gt = document.getElementById('globalTotal');
+  if (gt) gt.textContent = total;
+  const go = document.getElementById('globalOffice');
+  if (go) go.textContent = office;
+  const gr = document.getElementById('globalRemote');
+  if (gr) gr.textContent = remote;
+  const gl = document.getElementById('globalLeave');
+  if (gl) gl.textContent = leave;
+  const gf = document.getElementById('globalFinished');
+  if (gf) gf.textContent = finished;
 
-    setTimeout(() => {
-      showToast(t('toast.autoClockOut'), 'info');
-    }, 500);
+  if (state.currentView === 'analytics' && typeof renderAnalytics === 'function') {
+    // Only update analytics if it's not the initial boot rendering to save performance
+    renderAnalytics(office, remote, leave, finished, total);
   }
 }
 
@@ -809,7 +812,8 @@ function renderCalendar() {
 // ---- Analytics ----
 let attendanceChartInstance = null;
 
-function renderAnalytics() {
+// ---- Analytics View ----
+function renderAnalytics(officeVal, remoteVal, leaveVal, finishedVal, totalVal) {
   const container = document.getElementById('analyticsSummary');
   const canvas = document.getElementById('attendanceChart');
   if (!container || !canvas) return;
@@ -820,24 +824,44 @@ function renderAnalytics() {
     return;
   }
 
-  const today = getDateKey(new Date());
-  const todayData = state.attendance[today] || {};
+  let officeCount = officeVal;
+  let remoteCount = remoteVal;
+  let leaveCount = leaveVal;
+  let finishedCount = finishedVal;
+  let total = totalVal;
 
-  let officeCount = 0;
-  let remoteCount = 0;
-  let leaveCount = 0;
-  let finishedCount = 0;
+  if (officeVal === undefined) {
+    // Fallback if called directly without arguments
+    const today = getDateKey(new Date());
+    const todayData = state.attendance[today] || {};
+    officeCount = 0; remoteCount = 0; leaveCount = 0; finishedCount = 0;
 
-  state.employees.forEach(emp => {
-    const record = todayData[emp.id];
-    const status = record ? record.status : getDefaultStatus(emp);
-    if (status === 'office') officeCount++;
-    else if (status === 'remote') remoteCount++;
-    else if (status === 'leave') leaveCount++;
-    else if (status === 'finished') finishedCount++;
-  });
+    const now = new Date();
+    const currentMinutes = now.getHours() * 60 + now.getMinutes();
 
-  const total = state.employees.length;
+    state.employees.forEach(emp => {
+      const record = todayData[emp.id];
+      const status = record ? record.status : getDefaultStatus(emp);
+
+      let isFinished = false;
+      if (status !== 'leave') {
+        const shiftText = getShiftString(record?.shift || emp.defaultShift);
+        const endTimeStr = shiftText.split('-')[1]?.trim();
+        if (endTimeStr) {
+          const [hours, mins] = endTimeStr.split(':').map(Number);
+          if (currentMinutes >= hours * 60 + mins) {
+            isFinished = true;
+          }
+        }
+      }
+
+      if (status === 'leave') leaveCount++;
+      else if (isFinished) finishedCount++;
+      else if (status === 'office') officeCount++;
+      else if (status === 'remote') remoteCount++;
+    });
+    total = state.employees.length;
+  }
 
   container.innerHTML = `
     <div class="analytics-stat">

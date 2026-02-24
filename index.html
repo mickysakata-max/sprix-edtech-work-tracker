@@ -159,35 +159,32 @@
         </div>
       </header>
 
-      <!-- Status Summary -->
-      <div class="status-summary" id="statusSummary">
-        <div class="status-card total">
-          <div class="status-icon">👥</div>
-          <div class="status-info">
-            <h3 id="totalCount">0</h3>
-            <p data-i18n="status.total">Total Employees</p>
-          </div>
+      <!-- Global Stats Bar -->
+      <div class="global-stats-bar" id="globalStatsBar">
+        <div class="stat-item total">
+          <span class="stat-icon">👥</span>
+          <span class="stat-num" id="globalTotal">0</span>
+          <span class="stat-label" data-i18n="status.total">Total Employees</span>
         </div>
-        <div class="status-card office">
-          <div class="status-icon">🏢</div>
-          <div class="status-info">
-            <h3 id="officeCount">0</h3>
-            <p data-i18n="status.inOffice">In Office</p>
-          </div>
+        <div class="stat-item office">
+          <span class="stat-icon">🏢</span>
+          <span class="stat-num" id="globalOffice">0</span>
+          <span class="stat-label" data-i18n="status.inOffice">In Office</span>
         </div>
-        <div class="status-card remote">
-          <div class="status-icon">🏠</div>
-          <div class="status-info">
-            <h3 id="remoteCount">0</h3>
-            <p data-i18n="status.remote">Remote Work</p>
-          </div>
+        <div class="stat-item remote">
+          <span class="stat-icon">🏠</span>
+          <span class="stat-num" id="globalRemote">0</span>
+          <span class="stat-label" data-i18n="status.remote">Remote Work</span>
         </div>
-        <div class="status-card leave">
-          <div class="status-icon">🌙</div>
-          <div class="status-info">
-            <h3 id="leaveCount">0</h3>
-            <p data-i18n="status.leave">Leave / Off</p>
-          </div>
+        <div class="stat-item leave">
+          <span class="stat-icon">🌙</span>
+          <span class="stat-num" id="globalLeave">0</span>
+          <span class="stat-label" data-i18n="status.leave">Leave / Off</span>
+        </div>
+        <div class="stat-item finished">
+          <span class="stat-icon">🏁</span>
+          <span class="stat-num" id="globalFinished">0</span>
+          <span class="stat-label" data-i18n="analytics.finished">Finished</span>
         </div>
       </div>
 
