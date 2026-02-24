@@ -243,11 +243,21 @@ function updateHijriDate() {
 
   const now = new Date();
 
+  // Calculate Ramadan progress
+  const start = new Date(RAMADAN_START);
+  start.setHours(0, 0, 0, 0);
+  const nowOnlyDate = new Date();
+  nowOnlyDate.setHours(0, 0, 0, 0);
+  const diffTime = nowOnlyDate - start;
+  const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+
   // Choose locale based on current language
   let locale = 'en-US-u-ca-islamic';
   if (currentLang === 'ja') locale = 'ja-JP-u-ca-islamic-nu-latn';
   if (currentLang === 'ar') locale = 'ar-SA-u-ca-islamic';
 
+  let hijriDay = '';
+  let hijriMonth = '';
   try {
     const formatter = new Intl.DateTimeFormat(locale, {
       day: 'numeric',
@@ -255,15 +265,25 @@ function updateHijriDate() {
     });
 
     const parts = formatter.formatToParts(now);
-    const dayStr = parts.find(p => p.type === 'day')?.value || '';
-    const monthStr = parts.find(p => p.type === 'month')?.value || '';
-
-    dayEl.textContent = dayStr;
-    monthEl.textContent = monthStr;
+    hijriDay = parts.find(p => p.type === 'day')?.value || '';
+    hijriMonth = parts.find(p => p.type === 'month')?.value || '';
   } catch (e) {
     // Fallback if browser doesn't support u-ca-islamic
-    dayEl.textContent = now.getDate();
-    monthEl.textContent = now.toLocaleString(currentLang, { month: 'short' });
+    hijriDay = now.getDate();
+    hijriMonth = now.toLocaleString(currentLang, { month: 'short' });
+  }
+
+  // Large text: Month + Date
+  dayEl.textContent = `${hijriMonth} ${hijriDay}`;
+  dayEl.style.fontSize = '20px';
+
+  // Small text: Progress/Countdown
+  if (diffDays >= 0 && diffDays < 30) {
+    monthEl.textContent = `Day ${diffDays + 1} ${t('ramadan.dayOf')}`;
+  } else if (diffDays < 0) {
+    monthEl.textContent = `${Math.abs(diffDays)} ${t('ramadan.daysUntil')}`;
+  } else {
+    monthEl.textContent = t('ramadan.completed');
   }
 }
 

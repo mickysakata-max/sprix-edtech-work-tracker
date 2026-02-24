@@ -143,8 +143,8 @@ const TRANSLATIONS = {
     },
     'btn.finished': {
         ja: '🏁 退勤',
-        en: '🏁 Finished',
-        ar: '🏁 انتهى',
+        en: '🏁 End of Shift',
+        ar: '🏁 نهاية الدوام',
     },
 
     // ---- Employee Card / Table ----
@@ -537,8 +537,8 @@ const TRANSLATIONS = {
     },
     'analytics.finished': {
         ja: '退勤',
-        en: 'Finished',
-        ar: 'انتهى',
+        en: 'End of Shift',
+        ar: 'نهاية الدوام',
     },
 
     // ---- Auth ----
