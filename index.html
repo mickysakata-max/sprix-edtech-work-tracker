@@ -302,39 +302,6 @@
                 </select>
               </div>
             </div>
-
-            <div class="export-card">
-              <h3>🔗 Google Sheets Connection</h3>
-              <p data-i18n="settings.sheetsDesc">Connect to Google Sheets to sync data between Egypt office and Japan HQ
-                in real-time.</p>
-              <div class="form-group" style="margin-top: 12px;">
-                <label class="form-label">Google Apps Script URL</label>
-                <input type="url" class="form-input" id="sheetsUrl"
-                  placeholder="https://script.google.com/macros/s/...">
-              </div>
-              <div class="export-btn-group" style="margin-top: 12px;">
-                <button class="btn btn-primary" id="btnConnect" onclick="connectToSheets()">🔗 Connect</button>
-                <button class="btn btn-outline" id="btnDisconnect" onclick="disconnectSheets()"
-                  style="display:none;">⛓️‍💥 Disconnect</button>
-                <button class="btn btn-accent" id="btnSyncNow" onclick="forceSyncToSheets()" style="display:none;">🔄
-                  Sync Now</button>
-              </div>
-              <div id="syncStatus" style="margin-top: 12px; font-size: 12px; color: var(--gray-500);"></div>
-            </div>
-            <div class="export-card">
-              <h3>📖 Setup Guide</h3>
-              <ol style="font-size: 13px; color: var(--gray-600); line-height: 2; padding-left: 20px;">
-                <li>Open <a href="https://sheets.google.com" target="_blank" style="color: var(--sprix-magenta);">Google
-                    Sheets</a> and create a new spreadsheet</li>
-                <li>Go to <strong>Extensions → Apps Script</strong></li>
-                <li>Delete default code and paste the contents of <strong>Code.gs</strong></li>
-                <li>Click <strong>▶ Run → initialSetup</strong> (authorize when prompted)</li>
-                <li>Click <strong>Deploy → New deployment</strong></li>
-                <li>Type: <strong>Web app</strong>, Execute as: <strong>Me</strong>, Access: <strong>Anyone</strong>
-                </li>
-                <li>Copy the deployed URL and paste it above</li>
-              </ol>
-            </div>
           </div>
         </div>
 
