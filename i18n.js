@@ -141,6 +141,11 @@ const TRANSLATIONS = {
         en: '🌙 Leave',
         ar: '🌙 إجازة',
     },
+    'btn.finished': {
+        ja: '🏁 退勤',
+        en: '🏁 Finished',
+        ar: '🏁 انتهى',
+    },
 
     // ---- Employee Card / Table ----
     'emp.emptyTitle': {
@@ -437,6 +442,11 @@ const TRANSLATIONS = {
         en: 'Please enter a URL',
         ar: 'يرجى إدخال عنوان URL',
     },
+    'toast.autoClockOut': {
+        ja: '終業時刻を過ぎたため自動で退勤に設定しました',
+        en: 'Automatically clocked out due to shift end time',
+        ar: 'تم تسجيل الخروج تلقائيًا لانتهاء وقت الوردية',
+    },
 
     // ---- Settings: Work Mode ----
     'settings.workMode': {
@@ -524,6 +534,11 @@ const TRANSLATIONS = {
         ja: '休暇',
         en: 'Leave',
         ar: 'إجازة',
+    },
+    'analytics.finished': {
+        ja: '退勤',
+        en: 'Finished',
+        ar: 'انتهى',
     },
 
     // ---- Auth ----

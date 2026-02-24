@@ -25,6 +25,8 @@
   --status-office-bg: rgba(4, 53, 134, 0.08);
   --status-remote-bg: rgba(255, 0, 153, 0.08);
   --status-leave-bg: rgba(148, 163, 184, 0.08);
+  --status-finished: #475569;
+  --status-finished-bg: rgba(71, 85, 105, 0.08);
 
   /* Neutrals */
   --white: #ffffff;
@@ -81,6 +83,7 @@ body.dark-mode {
   --status-office-bg: rgba(10, 75, 179, 0.3);
   --status-remote-bg: rgba(255, 51, 173, 0.25);
   --status-leave-bg: rgba(148, 163, 184, 0.15);
+  --status-finished-bg: rgba(148, 163, 184, 0.2);
   --sprix-navy: #4b8df8;
   --success: #10b981;
   --warning: #f59e0b;
@@ -508,6 +511,11 @@ body {
   color: var(--status-leave);
 }
 
+.status-badge.finished {
+  background: var(--status-finished-bg);
+  color: var(--status-finished);
+}
+
 .employee-details {
   display: flex;
   gap: 8px;
@@ -602,6 +610,12 @@ body {
   background: var(--status-leave-bg);
   border-color: var(--status-leave);
   color: var(--status-leave);
+}
+
+.status-btn.active.finished-btn {
+  background: var(--status-finished-bg);
+  border-color: var(--status-finished);
+  color: var(--status-finished);
 }
 
 /* ---- Buttons ---- */
@@ -786,6 +800,10 @@ body {
   background: var(--status-leave);
 }
 
+.calendar-dot.finished {
+  background: var(--status-finished);
+}
+
 .calendar-mini-badges {
   display: flex;
   flex-direction: column;
@@ -806,6 +824,11 @@ body {
 .calendar-mini-badge.remote {
   background: var(--status-remote-bg);
   color: var(--status-remote);
+}
+
+.calendar-mini-badge.finished {
+  background: var(--status-finished-bg);
+  color: var(--status-finished);
 }
 
 /* ---- Employee Management View ---- */

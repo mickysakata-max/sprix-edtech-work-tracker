@@ -53,6 +53,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const themeSelect = document.getElementById('themeSelect');
   if (themeSelect) themeSelect.value = state.theme;
+
+  // Initial clock out check
+  setTimeout(checkAutoClockOut, 1000);
+  setInterval(checkAutoClockOut, 60000); // Check every minute
 });
 
 // ---- State Management ----
@@ -325,19 +329,26 @@ function renderDashboard() {
       : shift === 'opt2'
         ? t(state.workMode === 'normal' ? 'shift.normal2' : 'shift.ramadan2')
         : escapeHTML(shift);
+    const isLeave = status === 'leave';
+    const isFinished = status === 'finished';
 
-    let shiftButtonsHtml = `
+    let shiftButtonsHtml = ``;
+
+    if (!isLeave && !isFinished) {
+      shiftButtonsHtml = `
           <button class="shift-btn ${shift === 'opt1' ? 'active' : ''}"
                   onclick="setShift('${emp.id}', 'opt1')">${t(state.workMode === 'normal' ? 'shift.normal1' : 'shift.ramadan1')}</button>
           <button class="shift-btn ${shift === 'opt2' ? 'active' : ''}"
                   onclick="setShift('${emp.id}', 'opt2')">${t(state.workMode === 'normal' ? 'shift.normal2' : 'shift.ramadan2')}</button>
     `;
-    if (emp.defaultShift !== 'opt1' && emp.defaultShift !== 'opt2') {
-      shiftButtonsHtml += `
+      if (emp.defaultShift !== 'opt1' && emp.defaultShift !== 'opt2') {
+        shiftButtonsHtml += `
           <button class="shift-btn ${shift === emp.defaultShift ? 'active' : ''}"
                   onclick="setShift('${emp.id}', '${escapeHTML(emp.defaultShift)}')">${escapeHTML(emp.defaultShift)}</button>
        `;
+      }
     }
+
 
     return `
       <div class="employee-card ${status}" data-emp-id="${emp.id}">
@@ -366,11 +377,13 @@ function renderDashboard() {
 
         <div class="status-selector">
           <button class="status-btn office-btn ${status === 'office' ? 'active' : ''}"
-                  onclick="setStatus('${emp.id}', 'office')">${t('btn.office')}</button>
+                  onclick="setStatus('${emp.id}', 'office')">🏢 <span data-i18n="btn.office">${t('btn.office')}</span></button>
           <button class="status-btn remote-btn ${status === 'remote' ? 'active' : ''}"
-                  onclick="setStatus('${emp.id}', 'remote')">${t('btn.remote')}</button>
+                  onclick="setStatus('${emp.id}', 'remote')">🏠 <span data-i18n="btn.remote">${t('btn.remote')}</span></button>
           <button class="status-btn leave-btn ${status === 'leave' ? 'active' : ''}"
-                  onclick="setStatus('${emp.id}', 'leave')">${t('btn.leave')}</button>
+                  onclick="setStatus('${emp.id}', 'leave')">🌙 <span data-i18n="btn.leave">${t('btn.leave')}</span></button>
+          <button class="status-btn finished-btn ${status === 'finished' ? 'active' : ''}"
+                  onclick="setStatus('${emp.id}', 'finished')">🏁 <span data-i18n="btn.finished">${t('btn.finished')}</span></button>
         </div>
 
         <div class="shift-selector">
@@ -395,19 +408,40 @@ function createEmptyState() {
 // ---- Status & Shift ----
 function setStatus(empId, status) {
   const today = getDateKey(new Date());
-  if (!state.attendance[today]) state.attendance[today] = {};
-  if (!state.attendance[today][empId]) {
-    const emp = state.employees.find(e => e.id === empId);
-    state.attendance[today][empId] = {
-      status: status,
-      shift: getDefaultShift(emp),
-    };
-  } else {
-    state.attendance[today][empId].status = status;
+  const emp = state.employees.find(e => e.id === empId);
+
+  // Overtime detection
+  let isOvertime = false;
+  if (status === 'office' || status === 'remote') {
+    const shiftText = getShiftString(emp.defaultShift);
+    const endStr = shiftText.split('-')[1]?.trim();
+    if (endStr) {
+      const now = new Date();
+      const [h, m] = endStr.split(':').map(Number);
+      if (now.getHours() * 60 + now.getMinutes() >= h * 60 + m) {
+        isOvertime = true;
+      }
+    }
   }
+
+  if (!state.attendance[today]) state.attendance[today] = {};
+
+  state.attendance[today][empId] = {
+    status: status,
+    shift: state.attendance[today][empId]?.shift || getDefaultShift(emp),
+    overtime: isOvertime
+  };
+
   saveState();
   render();
   syncToSheets();
+}
+
+// Support function for getting raw shift string text
+function getShiftString(shiftValue) {
+  if (shiftValue === 'opt1') return t(state.workMode === 'normal' ? 'shift.normal1' : 'shift.ramadan1');
+  if (shiftValue === 'opt2') return t(state.workMode === 'normal' ? 'shift.normal2' : 'shift.ramadan2');
+  return shiftValue;
 }
 
 function setShift(empId, shift) {
@@ -424,6 +458,48 @@ function setShift(empId, shift) {
   saveState();
   render();
   syncToSheets();
+}
+
+// ---- Auto Clock-Out Logic ----
+function checkAutoClockOut() {
+  if (state.employees.length === 0) return;
+
+  const today = getDateKey(new Date());
+  if (!state.attendance[today]) return;
+
+  let changed = false;
+  const now = new Date();
+  const currentMinutes = now.getHours() * 60 + now.getMinutes();
+
+  state.employees.forEach(emp => {
+    const record = state.attendance[today][emp.id];
+    // If no record exists today, do not auto-clock them out (they haven't checked in)
+    if (!record) return;
+
+    if (record.status !== 'leave' && record.status !== 'finished' && !record.overtime) {
+      const shiftText = getShiftString(record.shift || emp.defaultShift);
+      const endTimeStr = shiftText.split('-')[1]?.trim();
+      if (endTimeStr) {
+        const [hours, mins] = endTimeStr.split(':').map(Number);
+        const endMinutes = hours * 60 + mins;
+        if (currentMinutes >= endMinutes) {
+          record.status = 'finished';
+          changed = true;
+        }
+      }
+    }
+  });
+
+  if (changed) {
+    saveState();
+    render();
+    if (state.currentView === 'analytics') renderAnalytics();
+    syncToSheets();
+
+    setTimeout(() => {
+      showToast(t('toast.autoClockOut'), 'info');
+    }, 500);
+  }
 }
 
 // ---- Modal ----
@@ -750,13 +826,15 @@ function renderAnalytics() {
   let officeCount = 0;
   let remoteCount = 0;
   let leaveCount = 0;
+  let finishedCount = 0;
 
   state.employees.forEach(emp => {
     const record = todayData[emp.id];
     const status = record ? record.status : getDefaultStatus(emp);
     if (status === 'office') officeCount++;
     else if (status === 'remote') remoteCount++;
-    else leaveCount++;
+    else if (status === 'leave') leaveCount++;
+    else if (status === 'finished') finishedCount++;
   });
 
   const total = state.employees.length;
@@ -769,17 +847,22 @@ function renderAnalytics() {
     <div class="analytics-stat" style="color: var(--success);">
       <div class="stat-label">🏢 ${t('analytics.office')}</div>
       <div class="stat-value">${officeCount}</div>
-      <div class="stat-percent">${Math.round((officeCount / total) * 100)}%</div>
+      <div class="stat-percent">${Math.round((officeCount / total) * 100) || 0}%</div>
     </div>
     <div class="analytics-stat" style="color: var(--warning);">
       <div class="stat-label">🏠 ${t('analytics.remote')}</div>
       <div class="stat-value">${remoteCount}</div>
-      <div class="stat-percent">${Math.round((remoteCount / total) * 100)}%</div>
+      <div class="stat-percent">${Math.round((remoteCount / total) * 100) || 0}%</div>
     </div>
     <div class="analytics-stat" style="color: var(--gray-400);">
       <div class="stat-label">🌙 ${t('analytics.leave')}</div>
       <div class="stat-value">${leaveCount}</div>
-       <div class="stat-percent">${Math.round((leaveCount / total) * 100)}%</div>
+       <div class="stat-percent">${Math.round((leaveCount / total) * 100) || 0}%</div>
+    </div>
+    <div class="analytics-stat" style="color: var(--gray-600);">
+      <div class="stat-label">🏁 ${t('analytics.finished')}</div>
+      <div class="stat-value">${finishedCount}</div>
+       <div class="stat-percent">${Math.round((finishedCount / total) * 100) || 0}%</div>
     </div>
   `;
 
@@ -795,10 +878,10 @@ function renderAnalytics() {
   attendanceChartInstance = new Chart(ctx, {
     type: 'doughnut',
     data: {
-      labels: [t('analytics.office'), t('analytics.remote'), t('analytics.leave')],
+      labels: [t('analytics.office'), t('analytics.remote'), t('analytics.leave'), t('analytics.finished')],
       datasets: [{
-        data: [officeCount, remoteCount, leaveCount],
-        backgroundColor: ['#10b981', '#f59e0b', '#cbd5e1'],
+        data: [officeCount, remoteCount, leaveCount, finishedCount],
+        backgroundColor: ['#10b981', '#f59e0b', '#cbd5e1', '#64748b'],
         borderWidth: isDark ? 2 : 0,
         borderColor: isDark ? '#1e293b' : '#ffffff',
       }]
