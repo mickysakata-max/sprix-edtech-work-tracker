@@ -1788,3 +1788,24 @@ html[dir="rtl"] .status-card h3 {
   background: var(--sprix-blossom) !important;
   color: var(--white) !important;
 }
+
+/* Phase 9.2: Global Overflow Resilience */
+body, html {
+  max-width: 100vw !important;
+  overflow-x: clip !important;
+}
+.app-layout {
+  max-width: 100vw !important;
+  overflow-x: clip !important;
+}
+.main-content {
+  min-width: 0 !important;
+  width: 100% !important;
+}
+.page-content {
+  max-width: 100% !important;
+  box-sizing: border-box !important;
+}
+.dashboard-stats {
+  max-width: 100% !important; /* Ensure the scrolling track itself is bound to the screen */
+}
