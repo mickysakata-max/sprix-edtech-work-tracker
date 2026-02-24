@@ -26,7 +26,7 @@ let state = {
 
 // ---- Google Sheets API config (Phase 2) ----
 const API_CONFIG = {
-  scriptUrl: 'https://script.google.com/macros/s/AKfycbwubVJsC_t37twYoOHJmj_gmcLVy5rYB1Df7Lo9Di4q6Z6rKc9Nw2kuUD8kgHct3Vqusw/exec',
+  scriptUrl: 'https://script.google.com/macros/s/AKfycbztwBicL7qoIYi0xQ9qTS7tDz1NPSYk70mB553VbpB9K16C8HsYgWM5ewoF9WPPVVen8Q/exec',
   connected: true,
 };
 
