@@ -258,47 +258,17 @@ body {
 }
 
 /* Multi-column Layout container */
-.main-layout {
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-}
+
 
 .page-content {
   flex: 1;
   width: 100%;
 }
 
-.right-sidebar {
-  padding: 0 32px 32px;
-}
+
 
 @media (min-width: 1024px) {
-  .main-layout {
-    flex-direction: row;
-    padding: 32px;
-    gap: 32px;
-    align-items: flex-start;
-  }
-
-  .page-content {
-    flex: 1;
-    min-width: 0;
-  }
-
-  .right-sidebar {
-    width: 360px;
-    flex-shrink: 0;
-    padding: 0;
-    position: sticky;
-    top: calc(var(--header-height) + 32px);
-  }
-
-  .status-summary {
-    flex-direction: column;
-    padding: 0 !important;
-  }
-}
+  
 
 /* ---- Header ---- */
 .header {
@@ -619,6 +589,7 @@ body {
   cursor: pointer;
   transition: all var(--transition-fast);
   font-family: 'Poppins', sans-serif;
+  --font-arabic: 'Tajawal', 'Almarai', sans-serif;
 }
 
 .shift-btn:hover {
@@ -650,6 +621,7 @@ body {
   cursor: pointer;
   transition: all var(--transition-fast);
   font-family: 'Poppins', sans-serif;
+  --font-arabic: 'Tajawal', 'Almarai', sans-serif;
   color: var(--gray-500);
 }
 
@@ -685,6 +657,7 @@ body {
   font-size: 13px;
   font-weight: 500;
   font-family: 'Poppins', sans-serif;
+  --font-arabic: 'Tajawal', 'Almarai', sans-serif;
   cursor: pointer;
   border: none;
   transition: all var(--transition-base);
@@ -1047,6 +1020,7 @@ body {
   border-radius: var(--radius-sm);
   font-size: 14px;
   font-family: 'Poppins', sans-serif;
+  --font-arabic: 'Tajawal', 'Almarai', sans-serif;
   color: var(--gray-800);
   transition: all var(--transition-fast);
   outline: none;
@@ -1064,6 +1038,7 @@ body {
   border-radius: var(--radius-sm);
   font-size: 14px;
   font-family: 'Poppins', sans-serif;
+  --font-arabic: 'Tajawal', 'Almarai', sans-serif;
   color: var(--gray-800);
   background: var(--white);
   cursor: pointer;
@@ -1299,6 +1274,7 @@ body {
   color: var(--gray-500);
   cursor: pointer;
   font-family: 'Poppins', sans-serif;
+  --font-arabic: 'Tajawal', 'Almarai', sans-serif;
   transition: all var(--transition-fast);
   white-space: nowrap;
 }
@@ -1484,10 +1460,20 @@ body {
    RTL Support (Arabic)
    ========================================== */
 [dir="rtl"] {
-  font-family: 'Cairo', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  font-size: 105%;
-  line-height: 1.6;
+  font-family: var(--font-arabic);
+  font-size: 110%;
+  line-height: 1.8;
   zoom: 1.15;
+}
+
+[dir="rtl"] .emp-name {
+  font-size: 22px !important;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+[dir="rtl"] body {
+  letter-spacing: 0.5px;
 }
 
 [dir="rtl"] .sidebar-title {
@@ -1611,4 +1597,53 @@ body.text-xlarge {
   font-family: 'Times New Roman', serif, 'Noto Serif', 'Noto Kufi Arabic';
   font-size: 15px !important;
   font-weight: 700 !important;
+}
+/* =========================================
+   PHASE 8 OVERRIDES (Layout & Arabic Font)
+   ========================================= */
+
+/* Restore Horizontal Dashboard Stats */
+.dashboard-stats {
+  display: grid !important;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)) !important;
+  gap: 16px !important;
+  margin-bottom: 24px !important;
+  position: static !important;
+  width: 100% !important;
+}
+
+.dashboard-stats .status-card {
+  flex: 1 !important;
+  min-width: 180px !important;
+}
+
+/* Arabic Typography Revolution */
+:root {
+  --font-arabic: 'Tajawal', 'Almarai', 'Cairo', sans-serif !important;
+}
+
+html[dir="rtl"], html[dir="rtl"] body, html[dir="rtl"] .app-container, html[dir="rtl"] {
+  font-family: var(--font-arabic) !important;
+}
+
+html[dir="rtl"] {
+  font-size: 110% !important;
+  line-height: 1.8 !important;
+  zoom: 1.15 !important;
+}
+
+html[dir="rtl"] body {
+  letter-spacing: 0.3px !important;
+}
+
+html[dir="rtl"] .emp-name {
+  font-size: 20px !important;
+  font-weight: 700 !important;
+  line-height: 1.4 !important;
+  margin-bottom: 8px !important;
+}
+
+html[dir="rtl"] .status-card h3 {
+  font-size: 32px !important;
+  font-weight: 800 !important;
 }
