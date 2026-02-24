@@ -49,9 +49,9 @@ const TRANSLATIONS = {
         ar: 'متتبع العمل',
     },
     'ramadan.label': {
-        ja: '🌙 ラマダン',
-        en: '🌙 Ramadan Day',
-        ar: '🌙 يوم رمضان',
+        ja: 'ラマダン',
+        en: 'Ramadan',
+        ar: 'رمضان',
     },
     'ramadan.dayOf': {
         ja: '日目 / 30日',
@@ -110,41 +110,46 @@ const TRANSLATIONS = {
 
     // ---- Status Buttons ----
     'btn.office': {
-        ja: '🏢 オフィス',
-        en: '🏢 Office',
-        ar: '🏢 مكتب',
+        ja: 'オフィス',
+        en: 'Office',
+        ar: 'مكتب',
     },
     'btn.remote': {
-        ja: '🏠 リモート',
-        en: '🏠 Remote',
-        ar: '🏠 عن بُعد',
+        ja: 'リモート',
+        en: 'Remote',
+        ar: 'عن بُعد',
     },
     'btn.leave': {
-        ja: '🌙 休暇',
-        en: '🌙 Leave',
-        ar: '🌙 إجازة',
+        ja: '休暇',
+        en: 'Leave',
+        ar: 'إجازة',
     },
 
     // ---- Badge ----
+    'filter.showing': {
+        ja: '表示中：',
+        en: 'Showing: ',
+        ar: 'يعرض: ',
+    },
     'badge.office': {
-        ja: '🏢 オフィス',
-        en: '🏢 Office',
-        ar: '🏢 مكتب',
+        ja: 'オフィス',
+        en: 'Office',
+        ar: 'مكتب',
     },
     'badge.remote': {
-        ja: '🏠 リモート',
-        en: '🏠 Remote',
-        ar: '🏠 عن بُعد',
+        ja: 'リモート',
+        en: 'Remote',
+        ar: 'عن بُعد',
     },
     'badge.leave': {
-        ja: '🌙 休暇',
-        en: '🌙 Leave',
-        ar: '🌙 إجازة',
+        ja: '休暇',
+        en: 'Leave',
+        ar: 'إجازة',
     },
     'btn.finished': {
-        ja: '🏁 退勤',
-        en: '🏁 End of Shift',
-        ar: '🏁 نهاية الدوام',
+        ja: '退勤',
+        en: 'End of Shift',
+        ar: 'نهاية الدوام',
     },
 
     // ---- Employee Card / Table ----
@@ -307,9 +312,9 @@ const TRANSLATIONS = {
         ar: 'تصدير البيانات',
     },
     'export.csvTitle': {
-        ja: '📊 CSVエクスポート',
-        en: '📊 CSV Export',
-        ar: '📊 تصدير CSV',
+        ja: 'CSVエクスポート',
+        en: 'CSV Export',
+        ar: 'تصدير CSV',
     },
     'export.csvDesc': {
         ja: '全出勤データをCSVファイルとしてダウンロード',
@@ -317,14 +322,14 @@ const TRANSLATIONS = {
         ar: 'تحميل جميع بيانات الحضور كملف CSV',
     },
     'export.csvBtn': {
-        ja: '📥 CSVをダウンロード',
-        en: '📥 Download CSV',
-        ar: '📥 تحميل CSV',
+        ja: 'CSVをダウンロード',
+        en: 'Download CSV',
+        ar: 'تحميل CSV',
     },
     'export.jsonTitle': {
-        ja: '📋 JSONバックアップ',
-        en: '📋 JSON Backup',
-        ar: '📋 نسخ احتياطي JSON',
+        ja: 'JSONバックアップ',
+        en: 'JSON Backup',
+        ar: 'نسخ احتياطي JSON',
     },
     'export.jsonDesc': {
         ja: '全データのバックアップを保存',
@@ -332,14 +337,14 @@ const TRANSLATIONS = {
         ar: 'حفظ نسخة احتياطية من جميع البيانات',
     },
     'export.backupBtn': {
-        ja: '📥 バックアップ保存',
-        en: '📥 Save Backup',
-        ar: '📥 حفظ النسخة',
+        ja: 'バックアップ保存',
+        en: 'Save Backup',
+        ar: 'حفظ النسخة',
     },
     'export.restoreBtn': {
-        ja: '📤 復元',
-        en: '📤 Restore',
-        ar: '📤 استعادة',
+        ja: '復元',
+        en: 'Restore',
+        ar: 'استعادة',
     },
 
     // ---- Toasts ----

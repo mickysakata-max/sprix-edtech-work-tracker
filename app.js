@@ -24,6 +24,7 @@ let state = {
   workMode: 'normal',
   theme: 'light',
   textSize: 'normal', // 'normal', 'large', 'xlarge'
+  currentFilter: null, // 'office', 'remote', 'leave', 'finished', 'total'
 };
 
 // ---- Google Sheets API config (Phase 2) ----
@@ -255,8 +256,17 @@ function updateRamadanDay() {
   if (!dayEl || !dateEl) return;
 
   if (diffDays >= 0 && diffDays < 30) {
-    dayEl.textContent = diffDays + 1;
-    dateEl.textContent = `Day ${diffDays + 1} ${t('ramadan.dayOf')}`;
+    const d = diffDays + 1;
+    // Line 2: e.g. "7日", "Day 7"
+    if (currentLang === 'ja') dayEl.textContent = `${d}日`;
+    else if (currentLang === 'en') dayEl.textContent = `Day ${d}`;
+    else dayEl.textContent = `يوم ${d}`;
+
+    // Line 3: e.g. "7 日目 / 30日", "Day 7 / 30 Days"
+    if (currentLang === 'ja') dateEl.textContent = `${d} 日目 / 30日`;
+    else if (currentLang === 'en') dateEl.textContent = `Day ${d} / 30 Days`;
+    else dateEl.textContent = `يوم ${d} / 30 يوم`;
+
   } else if (diffDays < 0) {
     dayEl.textContent = Math.abs(diffDays);
     dateEl.textContent = `${Math.abs(diffDays)} ${t('ramadan.daysUntil')}`;
@@ -325,7 +335,58 @@ function renderDashboard() {
   const today = getDateKey(new Date());
   const todayData = state.attendance[today] || {};
 
-  grid.innerHTML = state.employees.map(emp => {
+  // Apply Filter Logic
+  let employeesToRender = state.employees;
+
+  if (state.currentFilter && state.currentFilter !== 'total') {
+    const now = new Date();
+    const currentMinutes = now.getHours() * 60 + now.getMinutes();
+
+    employeesToRender = state.employees.filter(emp => {
+      const record = todayData[emp.id];
+      const status = record ? record.status : getDefaultStatus(emp);
+
+      let isFinished = false;
+      if (status !== 'leave') {
+        const shiftText = getShiftString(record?.shift || getDefaultShift(emp));
+        const endTimeStr = shiftText.split('-')[1]?.trim();
+        if (endTimeStr) {
+          const [hours, mins] = endTimeStr.split(':').map(Number);
+          if (currentMinutes >= hours * 60 + mins) {
+            isFinished = true;
+          }
+        }
+      }
+
+      if (state.currentFilter === 'finished') return isFinished;
+      if (isFinished) return false; // If filtering by anything other than finished, hide finished people
+      return status === state.currentFilter;
+    });
+  }
+
+  // Update Filter Badge UI
+  const filterBadge = document.getElementById('filterActiveBadge');
+  const filterTextName = document.getElementById('filterTextName');
+
+  if (state.currentFilter && state.currentFilter !== 'total') {
+    filterBadge.style.display = 'flex';
+    if (state.currentFilter === 'office') filterTextName.textContent = t('status.inOffice');
+    else if (state.currentFilter === 'remote') filterTextName.textContent = t('status.remote');
+    else if (state.currentFilter === 'leave') filterTextName.textContent = t('status.leave');
+    else if (state.currentFilter === 'finished') filterTextName.textContent = t('analytics.finished');
+  } else {
+    filterBadge.style.display = 'none';
+  }
+
+  if (employeesToRender.length === 0) {
+    grid.innerHTML = `<div class="empty-state" style="grid-column: 1/-1;">
+      <div class="empty-icon">🔍</div>
+      <p>No employees match the current filter.</p>
+    </div>`;
+    return;
+  }
+
+  grid.innerHTML = employeesToRender.map(emp => {
     const record = todayData[emp.id];
     const status = record ? record.status : getDefaultStatus(emp);
     const shift = record ? record.shift : getDefaultShift(emp);
@@ -448,6 +509,21 @@ function setShift(empId, shift) {
   saveState();
   render();
   syncToSheets();
+}
+
+// ---- Filtering ----
+function filterByStatus(status) {
+  state.currentFilter = status === 'total' ? null : status;
+  if (state.currentView !== 'dashboard') {
+    switchView('dashboard');
+  } else {
+    renderDashboard();
+  }
+}
+
+function clearFilter() {
+  state.currentFilter = null;
+  renderDashboard();
 }
 
 // ---- Global Stats Logic ----
