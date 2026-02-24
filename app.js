@@ -236,27 +236,34 @@ function updateHeader() {
   document.getElementById('headerDate').textContent = dateStr;
 }
 
-function updateRamadanDay() {
+function updateHijriDate() {
+  const dayEl = document.getElementById('hijriDay');
+  const monthEl = document.getElementById('hijriMonth');
+  if (!dayEl || !monthEl) return;
+
   const now = new Date();
-  now.setHours(0, 0, 0, 0);
-  const start = new Date(RAMADAN_START);
-  start.setHours(0, 0, 0, 0);
 
-  const diffTime = now - start;
-  const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+  // Choose locale based on current language
+  let locale = 'en-US-u-ca-islamic';
+  if (currentLang === 'ja') locale = 'ja-JP-u-ca-islamic-nu-latn';
+  if (currentLang === 'ar') locale = 'ar-SA-u-ca-islamic';
 
-  const dayEl = document.getElementById('ramadanDay');
-  const dateEl = document.getElementById('ramadanDate');
+  try {
+    const formatter = new Intl.DateTimeFormat(locale, {
+      day: 'numeric',
+      month: 'long'
+    });
 
-  if (diffDays >= 0 && diffDays < 30) {
-    dayEl.textContent = diffDays + 1;
-    dateEl.textContent = `Day ${diffDays + 1} ${t('ramadan.dayOf')}`;
-  } else if (diffDays < 0) {
-    dayEl.textContent = Math.abs(diffDays);
-    dateEl.textContent = `${Math.abs(diffDays)} ${t('ramadan.daysUntil')}`;
-  } else {
-    dayEl.textContent = '✓';
-    dateEl.textContent = t('ramadan.completed');
+    const parts = formatter.formatToParts(now);
+    const dayStr = parts.find(p => p.type === 'day')?.value || '';
+    const monthStr = parts.find(p => p.type === 'month')?.value || '';
+
+    dayEl.textContent = dayStr;
+    monthEl.textContent = monthStr;
+  } catch (e) {
+    // Fallback if browser doesn't support u-ca-islamic
+    dayEl.textContent = now.getDate();
+    monthEl.textContent = now.toLocaleString(currentLang, { month: 'short' });
   }
 }
 

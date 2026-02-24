@@ -298,63 +298,83 @@ body {
   padding: 4px;
 }
 
-/* ---- Global Stats Bar ---- */
-.global-stats-bar {
+/* ---- Status Summary Bar ---- */
+.status-summary {
   display: flex;
-  justify-content: center;
-  align-items: center;
+  gap: 16px;
+  padding: 24px 32px;
   background: var(--white);
-  padding: 12px 24px;
-  border-bottom: 1px solid var(--gray-200);
+  border-bottom: 1px solid var(--gray-100);
   flex-wrap: wrap;
-  gap: 24px;
 }
 
-.stat-item {
+.status-card {
+  flex: 1;
+  background: var(--white);
+  border: 1px solid var(--gray-200);
+  border-radius: var(--radius-lg);
+  padding: 16px 20px;
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 12px;
+  transition: all var(--transition-base);
+  cursor: default;
+  min-width: 140px;
 }
 
-.stat-item .stat-icon {
-  font-size: 16px;
+.status-card:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
 }
 
-.stat-item .stat-num {
-  font-weight: 700;
-  font-size: 16px;
-  color: var(--gray-900);
+.status-card .status-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  flex-shrink: 0;
 }
 
-.stat-item .stat-label {
-  font-size: 12px;
-  font-weight: 500;
-  color: var(--gray-500);
-}
-
-.stat-item.office .stat-icon,
-.stat-item.office .stat-num {
+.status-card.office .status-icon {
+  background: var(--status-office-bg);
   color: var(--status-office);
 }
 
-.stat-item.remote .stat-icon,
-.stat-item.remote .stat-num {
+.status-card.remote .status-icon {
+  background: var(--status-remote-bg);
   color: var(--status-remote);
 }
 
-.stat-item.leave .stat-icon,
-.stat-item.leave .stat-num {
+.status-card.leave .status-icon {
+  background: var(--status-leave-bg);
   color: var(--status-leave);
 }
 
-.stat-item.finished .stat-icon,
-.stat-item.finished .stat-num {
+.status-card.total .status-icon {
+  background: var(--sprix-blossom-pale);
+  color: var(--sprix-magenta);
+}
+
+.status-card.finished .status-icon {
+  background: var(--status-finished-bg);
   color: var(--status-finished);
 }
 
-.stat-item.total .stat-icon,
-.stat-item.total .stat-num {
-  color: var(--sprix-magenta);
+.status-card .status-info h3 {
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--gray-900);
+}
+
+.status-card .status-info p {
+  font-size: 12px;
+  color: var(--gray-500);
+  font-weight: 500;
+  margin-top: 4px;
 }
 
 /* ---- Page Content ---- */

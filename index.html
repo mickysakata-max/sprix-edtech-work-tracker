@@ -125,9 +125,9 @@
 
       <div class="sidebar-footer">
         <div class="ramadan-info">
-          <div class="ramadan-label" data-i18n="ramadan.label">🌙 Ramadan Day</div>
-          <div class="ramadan-day" id="ramadanDay">6</div>
-          <div class="ramadan-day-label" id="ramadanDate"></div>
+          <div class="ramadan-label" data-i18n="ramadan.label">🌙 Islamic Date</div>
+          <div class="ramadan-day" id="hijriDay">15</div>
+          <div class="ramadan-day-label" id="hijriMonth">Ramadan</div>
         </div>
       </div>
     </aside>
@@ -159,32 +159,42 @@
         </div>
       </header>
 
-      <!-- Global Stats Bar -->
-      <div class="global-stats-bar" id="globalStatsBar">
-        <div class="stat-item total">
-          <span class="stat-icon">👥</span>
-          <span class="stat-num" id="globalTotal">0</span>
-          <span class="stat-label" data-i18n="status.total">Total Employees</span>
+      <!-- Status Summary -->
+      <div class="status-summary" id="statusSummary">
+        <div class="status-card total">
+          <div class="status-icon">👥</div>
+          <div class="status-info">
+            <h3 id="globalTotal">0</h3>
+            <p data-i18n="status.total">Total Employees</p>
+          </div>
         </div>
-        <div class="stat-item office">
-          <span class="stat-icon">🏢</span>
-          <span class="stat-num" id="globalOffice">0</span>
-          <span class="stat-label" data-i18n="status.inOffice">In Office</span>
+        <div class="status-card office">
+          <div class="status-icon">🏢</div>
+          <div class="status-info">
+            <h3 id="globalOffice">0</h3>
+            <p data-i18n="status.inOffice">In Office</p>
+          </div>
         </div>
-        <div class="stat-item remote">
-          <span class="stat-icon">🏠</span>
-          <span class="stat-num" id="globalRemote">0</span>
-          <span class="stat-label" data-i18n="status.remote">Remote Work</span>
+        <div class="status-card remote">
+          <div class="status-icon">🏠</div>
+          <div class="status-info">
+            <h3 id="globalRemote">0</h3>
+            <p data-i18n="status.remote">Remote Work</p>
+          </div>
         </div>
-        <div class="stat-item leave">
-          <span class="stat-icon">🌙</span>
-          <span class="stat-num" id="globalLeave">0</span>
-          <span class="stat-label" data-i18n="status.leave">Leave / Off</span>
+        <div class="status-card leave">
+          <div class="status-icon">🌙</div>
+          <div class="status-info">
+            <h3 id="globalLeave">0</h3>
+            <p data-i18n="status.leave">Leave / Off</p>
+          </div>
         </div>
-        <div class="stat-item finished">
-          <span class="stat-icon">🏁</span>
-          <span class="stat-num" id="globalFinished">0</span>
-          <span class="stat-label" data-i18n="analytics.finished">Finished</span>
+        <div class="status-card finished">
+          <div class="status-icon">🏁</div>
+          <div class="status-info">
+            <h3 id="globalFinished">0</h3>
+            <p data-i18n="analytics.finished">Finished</p>
+          </div>
         </div>
       </div>
 
