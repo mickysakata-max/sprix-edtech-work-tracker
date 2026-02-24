@@ -26,8 +26,8 @@ let state = {
 
 // ---- Google Sheets API config (Phase 2) ----
 const API_CONFIG = {
-  scriptUrl: '', // Will be set when Google Apps Script is deployed
-  connected: false,
+  scriptUrl: 'https://script.google.com/macros/s/AKfycbwubVJsC_t37twYoOHJmj_gmcLVy5rYB1Df7Lo9Di4q6Z6rKc9Nw2kuUD8kgHct3Vqusw/exec',
+  connected: true,
 };
 
 // ---- Init ----
@@ -75,6 +75,11 @@ function loadState() {
   } catch (e) {
     console.error('Failed to load state:', e);
   }
+
+  // Load from cloud if connected
+  if (API_CONFIG.connected && API_CONFIG.scriptUrl) {
+    loadDataFromCloud();
+  }
 }
 
 function saveState() {
@@ -87,6 +92,65 @@ function saveState() {
   } catch (e) {
     console.error('Failed to save state:', e);
   }
+
+  // Sync to cloud if connected
+  if (API_CONFIG.connected && API_CONFIG.scriptUrl) {
+    syncDataToCloud();
+  }
+}
+
+// ---- Cloud Sync (Phase 2) ----
+async function loadDataFromCloud() {
+  try {
+    const response = await fetch(`${API_CONFIG.scriptUrl}?action=load`);
+    const data = await response.json();
+
+    if (data.success) {
+      if (data.employees && data.employees.length > 0) state.employees = data.employees;
+      if (data.attendance) state.attendance = Object.assign(state.attendance, data.attendance);
+
+      // Re-save to local silently
+      localStorage.setItem('sprix-ramadan-tracker', JSON.stringify({
+        employees: state.employees,
+        attendance: state.attendance,
+        workMode: state.workMode,
+      }));
+
+      // Re-render views with new data
+      if (state.currentView === 'dashboard') renderDashboard();
+      if (state.currentView === 'calendar') renderCalendar();
+      if (state.currentView === 'employees') renderEmployeeTable();
+      renderStatusCards();
+    }
+  } catch (e) {
+    console.error('Cloud load failed', e);
+  }
+}
+
+let syncTimeout = null;
+function syncDataToCloud() {
+  if (syncTimeout) clearTimeout(syncTimeout);
+
+  syncTimeout = setTimeout(async () => {
+    try {
+      const payload = {
+        action: 'sync',
+        employees: state.employees,
+        attendance: state.attendance
+      };
+
+      const response = await fetch(API_CONFIG.scriptUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body: JSON.stringify(payload)
+      });
+
+      const result = await response.json();
+      if (!result.success) console.error('Cloud sync failed:', result.error);
+    } catch (e) {
+      console.error('Cloud sync failed', e);
+    }
+  }, 1500); // 1.5s debounce to avoid rate limits
 }
 
 // ---- Navigation ----
