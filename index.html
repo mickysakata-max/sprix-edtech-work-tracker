@@ -16,7 +16,7 @@
     href="https://fonts.googleapis.com/css2?family=Almarai:wght@400;700;800&family=Cairo:wght@400;500;600;700&family=Tajawal:wght@400;500;700;800&display=swap"
     rel="stylesheet">
 
-  <link rel="stylesheet" href="style.css?v=7">
+  <link rel="stylesheet" href="style.css?v=8">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="https://unpkg.com/@phosphor-icons/web"></script>
 </head>
@@ -25,11 +25,16 @@
 
   <!-- Auth Overlay -->
   <div class="auth-overlay" id="authOverlay">
-    <div class="auth-card">
-      <div class="auth-logo" style="display: flex; justify-content: center; margin-bottom: 24px;">
-        <div
-          style="background: white; padding: 12px 24px; border-radius: 12px; display: inline-block; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
-          <img src="sprix-logo.png" alt="SPRIX" style="height: 36px; object-fit: contain;">
+        <div class="auth-card">
+      <div class="auth-logo-group" style="text-align: center; margin-bottom: 24px;">
+        <div style="display: flex; align-items: center; justify-content: center; gap: 8px;">
+          <div style="background: white; padding: 8px 16px; border-radius: 8px; display: inline-flex; align-items: center; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+             <img src="sprix-logo.png" alt="SPRIX" style="height: 28px; object-fit: contain;">
+          </div>
+          <span style="font-size: 26px; font-weight: 700; color: var(--sprix-navy); font-family: 'Poppins', sans-serif;">EdTech</span>
+        </div>
+        <div style="font-size: 16px; font-weight: 500; color: var(--sprix-gray); margin-top: 8px; letter-spacing: 1px;">
+          Work Tracker
         </div>
       </div>
       <h3 class="auth-title" data-i18n="auth.title">Enter Password</h3>
@@ -387,56 +392,14 @@
 
       </div> <!-- /page-content -->
 
-      <!-- Right Sidebar (Status Cards) -->
-      <aside class="right-sidebar">
-        <div class="status-summary" id="statusSummary">
-          <div class="status-card total" onclick="filterByStatus('total')">
-            <div class="status-icon"><i class="ph-fill ph-users-three" style="color: var(--sprix-blue);"></i></div>
-            <div class="status-info">
-              <h3 id="globalTotal">0</h3>
-              <p data-i18n="status.total">Total Employees</p>
-            </div>
-          </div>
-          <div class="status-card office" onclick="filterByStatus('office')">
-            <div class="status-icon"><i class="ph-fill ph-buildings" style="color: var(--sprix-blue);"></i></div>
-            <div class="status-info">
-              <h3 id="globalOffice">0</h3>
-              <p data-i18n="status.inOffice">In Office</p>
-            </div>
-          </div>
-          <div class="status-card remote" onclick="filterByStatus('remote')">
-            <div class="status-icon"><i class="ph-fill ph-house-line" style="color: var(--sprix-blue);"></i></div>
-            <div class="status-info">
-              <h3 id="globalRemote">0</h3>
-              <p data-i18n="status.remote">Remote Work</p>
-            </div>
-          </div>
-          <div class="status-card leave" onclick="filterByStatus('leave')">
-            <div class="status-icon"><i class="ph-fill ph-moon" style="color: var(--sprix-blue);"></i></div>
-            <div class="status-info">
-              <h3 id="globalLeave">0</h3>
-              <p data-i18n="status.leave">Leave / Off</p>
-            </div>
-          </div>
-          <div class="status-card finished" onclick="filterByStatus('finished')">
-            <div class="status-icon"><i class="ph-fill ph-flag-checkered" style="color: var(--sprix-blue);"></i></div>
-            <div class="status-info">
-              <h3 id="globalFinished">0</h3>
-              <p data-i18n="analytics.finished">Finished</p>
-            </div>
-          </div>
-
-          <!-- We can also move the Ramadan Info Widget here later -->
-
-        </div>
-      </aside>
+      
 
 
     </main>
   </div>
 
-  <script src="i18n.js?v=7"></script>
-  <script src="app.js?v=7"></script>
+  <script src="i18n.js?v=8"></script>
+  <script src="app.js?v=8"></script>
 </body>
 
 </html>

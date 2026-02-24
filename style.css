@@ -1647,3 +1647,89 @@ html[dir="rtl"] .status-card h3 {
   font-size: 32px !important;
   font-weight: 800 !important;
 }
+
+/* =========================================
+   PHASE 9 OVERRIDES (Liquid Glass & Sticky)
+   ========================================= */
+
+/* Apple Liquid Glass Parameters */
+:root {
+  --glass-bg: rgba(255, 255, 255, 0.45);
+  --glass-border: 1px solid rgba(255, 255, 255, 0.6);
+  --glass-blur: blur(28px) saturate(200%);
+  --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+}
+
+[data-theme="dark"] {
+  --glass-bg: rgba(30, 41, 59, 0.55);
+  --glass-border: 1px solid rgba(255, 255, 255, 0.1);
+  --glass-blur: blur(28px) saturate(200%);
+  --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+/* Apply Liquid Glass to Core Components */
+.app-header, .sidebar, .status-card, .employee-card, .auth-card, .export-card, .calendar-container {
+  background: var(--glass-bg) !important;
+  backdrop-filter: var(--glass-blur) !important;
+  -webkit-backdrop-filter: var(--glass-blur) !important;
+  border: var(--glass-border) !important;
+  box-shadow: var(--glass-shadow) !important;
+}
+
+/* Reset any solid backgrounds forcing on dark theme */
+[data-theme="dark"] .app-header, 
+[data-theme="dark"] .sidebar, 
+[data-theme="dark"] .status-card, 
+[data-theme="dark"] .employee-card, 
+[data-theme="dark"] .auth-card {
+  background: var(--glass-bg) !important;
+}
+
+/* Allow scrolling out of page content bounds */
+.page-content {
+  overflow: visible !important;
+  padding-top: 24px;
+}
+
+/* Sticky Single-Row Top Status Cards */
+.dashboard-stats {
+  display: flex !important;
+  flex-wrap: nowrap !important;
+  overflow-x: auto !important;
+  overflow-y: hidden !important;
+  gap: 16px !important;
+  margin-bottom: 24px !important;
+  position: sticky !important;
+  top: 72px !important; /* Sticks right below the header */
+  z-index: 90 !important;
+  padding: 12px 6px 16px 6px !important; /* Padding creates visual buffer for scrolling shadow */
+  width: auto !important;
+  
+  /* Semi-transparent track background for aesthetic appeal and read-behind */
+  background: rgba(245, 247, 250, 0.6) !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+  border-radius: 12px;
+  border: var(--glass-border) !important;
+  scroll-behavior: smooth;
+  margin-left: -6px;
+  margin-right: -6px;
+}
+
+[data-theme="dark"] .dashboard-stats {
+  background: rgba(15, 23, 42, 0.6) !important;
+}
+
+/* Hide scrollbars for absolute elegant cleanliness */
+.dashboard-stats::-webkit-scrollbar {
+  display: none !important;
+}
+.dashboard-stats {
+  scrollbar-width: none !important;
+}
+
+/* Force cards to never shrink below 200px width */
+.dashboard-stats .status-card {
+  flex: 0 0 auto !important;
+  min-width: 220px !important;
+}
