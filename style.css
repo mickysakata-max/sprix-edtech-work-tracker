@@ -99,7 +99,7 @@ body.dark-mode {
 }
 
 html {
-  font-size: 16px;
+  font-size: calc(var(--text-scale, 1) * 16px);
   scroll-behavior: smooth;
 }
 
@@ -153,7 +153,7 @@ body {
 }
 
 .sidebar-logo .logo-text {
-  font-size: 22px;
+  font-size: calc(var(--text-scale, 1) * 22px);
   font-weight: 700;
   letter-spacing: 2px;
   color: var(--white);
@@ -169,7 +169,7 @@ body {
 }
 
 .sidebar-subtitle {
-  font-size: 11px;
+  font-size: calc(var(--text-scale, 1) * 11px);
   color: rgba(255, 255, 255, 0.5);
   letter-spacing: 0.5px;
   margin-top: 2px;
@@ -189,7 +189,7 @@ body {
   gap: 12px;
   padding: 12px 16px;
   border-radius: var(--radius-md);
-  font-size: 14px;
+  font-size: calc(var(--text-scale, 1) * 14px);
   font-weight: 500;
   color: rgba(255, 255, 255, 0.65);
   cursor: pointer;
@@ -212,7 +212,7 @@ body {
 }
 
 .nav-item .nav-icon {
-  font-size: 18px;
+  font-size: calc(var(--text-scale, 1) * 18px);
   width: 24px;
   text-align: center;
 }
@@ -230,7 +230,7 @@ body {
 }
 
 .ramadan-info .ramadan-label {
-  font-size: 11px;
+  font-size: calc(var(--text-scale, 1) * 11px);
   text-transform: uppercase;
   letter-spacing: 1px;
   color: var(--sprix-blossom);
@@ -238,13 +238,13 @@ body {
 }
 
 .ramadan-info .ramadan-day {
-  font-size: 28px;
+  font-size: calc(var(--text-scale, 1) * 28px);
   font-weight: 700;
   color: var(--white);
 }
 
 .ramadan-info .ramadan-day-label {
-  font-size: 11px;
+  font-size: calc(var(--text-scale, 1) * 11px);
   color: rgba(255, 255, 255, 0.5);
 }
 
@@ -294,13 +294,13 @@ body {
 }
 
 .header-title {
-  font-size: 18px;
+  font-size: calc(var(--text-scale, 1) * 18px);
   font-weight: 600;
   color: var(--sprix-navy);
 }
 
 .header-date {
-  font-size: 13px;
+  font-size: calc(var(--text-scale, 1) * 13px);
   color: var(--gray-500);
   font-weight: 400;
 }
@@ -315,7 +315,7 @@ body {
   display: none;
   background: none;
   border: none;
-  font-size: 24px;
+  font-size: calc(var(--text-scale, 1) * 24px);
   cursor: pointer;
   color: var(--sprix-navy);
   padding: 4px;
@@ -360,7 +360,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 22px;
+  font-size: calc(var(--text-scale, 1) * 22px);
   flex-shrink: 0;
 }
 
@@ -390,14 +390,14 @@ body {
 }
 
 .status-card .status-info h3 {
-  font-size: 28px;
+  font-size: calc(var(--text-scale, 1) * 28px);
   font-weight: 700;
   line-height: 1;
   color: var(--gray-900);
 }
 
 .status-card .status-info p {
-  font-size: 12px;
+  font-size: calc(var(--text-scale, 1) * 12px);
   color: var(--gray-500);
   font-weight: 500;
   margin-top: 4px;
@@ -417,7 +417,7 @@ body {
 }
 
 .section-title {
-  font-size: 16px;
+  font-size: calc(var(--text-scale, 1) * 16px);
   font-weight: 600;
   color: var(--sprix-navy);
 }
@@ -496,7 +496,7 @@ body {
   align-items: center;
   justify-content: center;
   font-weight: 600;
-  font-size: 18px;
+  font-size: calc(var(--text-scale, 1) * 18px);
   color: var(--white);
   background: var(--sprix-navy);
   flex-shrink: 0;
@@ -512,13 +512,13 @@ body {
 }
 
 .employee-name {
-  font-size: 16px;
+  font-size: calc(var(--text-scale, 1) * 16px);
   font-weight: 600;
   color: var(--gray-800);
 }
 
 .employee-dept {
-  font-size: 11px;
+  font-size: calc(var(--text-scale, 1) * 11px);
   color: var(--gray-500);
   margin-top: 1px;
 }
@@ -529,7 +529,7 @@ body {
   gap: 6px;
   padding: 5px 12px;
   border-radius: var(--radius-full);
-  font-size: 11px;
+  font-size: calc(var(--text-scale, 1) * 11px);
   font-weight: 600;
   letter-spacing: 0.3px;
 }
@@ -561,13 +561,13 @@ body {
   padding: 6px 10px;
   border-radius: var(--radius-sm);
   background: var(--gray-50);
-  font-size: 11px;
+  font-size: calc(var(--text-scale, 1) * 11px);
   color: var(--gray-600);
   border: 1px solid var(--gray-100);
 }
 
 .detail-tag .tag-icon {
-  font-size: 12px;
+  font-size: calc(var(--text-scale, 1) * 12px);
 }
 
 /* ---- Shift Selector ---- */
@@ -583,7 +583,7 @@ body {
   border: 1px solid var(--gray-200);
   border-radius: var(--radius-sm);
   background: var(--white);
-  font-size: 11px;
+  font-size: calc(var(--text-scale, 1) * 11px);
   font-weight: 500;
   color: var(--gray-500);
   cursor: pointer;
@@ -616,7 +616,7 @@ body {
   border: 1px solid var(--gray-200);
   border-radius: var(--radius-sm);
   background: var(--white);
-  font-size: 11px;
+  font-size: calc(var(--text-scale, 1) * 11px);
   font-weight: 500;
   cursor: pointer;
   transition: all var(--transition-fast);
@@ -654,7 +654,7 @@ body {
   gap: 6px;
   padding: 8px 16px;
   border-radius: var(--radius-sm);
-  font-size: 13px;
+  font-size: calc(var(--text-scale, 1) * 13px);
   font-weight: 500;
   font-family: 'Poppins', sans-serif;
   --font-arabic: 'Tajawal', 'Almarai', sans-serif;
@@ -720,7 +720,7 @@ body {
 }
 
 .calendar-title {
-  font-size: 16px;
+  font-size: calc(var(--text-scale, 1) * 16px);
   font-weight: 600;
   color: var(--sprix-navy);
 }
@@ -736,7 +736,7 @@ body {
   border-radius: var(--radius-sm);
   background: var(--white);
   cursor: pointer;
-  font-size: 14px;
+  font-size: calc(var(--text-scale, 1) * 14px);
   color: var(--gray-600);
   transition: all var(--transition-fast);
 }
@@ -755,7 +755,7 @@ body {
 .calendar-day-header {
   padding: 12px;
   text-align: center;
-  font-size: 11px;
+  font-size: calc(var(--text-scale, 1) * 11px);
   font-weight: 600;
   color: var(--gray-500);
   text-transform: uppercase;
@@ -795,7 +795,7 @@ body {
 }
 
 .calendar-day-number {
-  font-size: 12px;
+  font-size: calc(var(--text-scale, 1) * 12px);
   font-weight: 600;
   color: var(--gray-700);
   margin-bottom: 4px;
@@ -842,7 +842,7 @@ body {
 }
 
 .calendar-mini-badge {
-  font-size: 9px;
+  font-size: calc(var(--text-scale, 1) * 9px);
   padding: 1px 5px;
   border-radius: var(--radius-sm);
   font-weight: 500;
@@ -872,7 +872,7 @@ body {
 .employee-table th {
   padding: 14px 20px;
   text-align: left;
-  font-size: 11px;
+  font-size: calc(var(--text-scale, 1) * 11px);
   font-weight: 600;
   color: var(--gray-500);
   text-transform: uppercase;
@@ -883,7 +883,7 @@ body {
 
 .employee-table td {
   padding: 14px 20px;
-  font-size: 13px;
+  font-size: calc(var(--text-scale, 1) * 13px);
   border-bottom: 1px solid var(--gray-100);
   color: var(--gray-700);
 }
@@ -912,7 +912,7 @@ body {
   background: none;
   border: 1px solid var(--gray-200);
   border-radius: var(--radius-sm);
-  font-size: 12px;
+  font-size: calc(var(--text-scale, 1) * 12px);
   cursor: pointer;
   color: var(--gray-500);
   transition: all var(--transition-fast);
@@ -970,7 +970,7 @@ body {
 }
 
 .modal-title {
-  font-size: 18px;
+  font-size: calc(var(--text-scale, 1) * 18px);
   font-weight: 600;
   color: var(--sprix-navy);
 }
@@ -978,7 +978,7 @@ body {
 .modal-close {
   background: none;
   border: none;
-  font-size: 20px;
+  font-size: calc(var(--text-scale, 1) * 20px);
   cursor: pointer;
   color: var(--gray-400);
   padding: 4px;
@@ -1007,7 +1007,7 @@ body {
 
 .form-label {
   display: block;
-  font-size: 12px;
+  font-size: calc(var(--text-scale, 1) * 12px);
   font-weight: 600;
   color: var(--gray-600);
   margin-bottom: 6px;
@@ -1018,7 +1018,7 @@ body {
   padding: 10px 14px;
   border: 1px solid var(--gray-200);
   border-radius: var(--radius-sm);
-  font-size: 14px;
+  font-size: calc(var(--text-scale, 1) * 14px);
   font-family: 'Poppins', sans-serif;
   --font-arabic: 'Tajawal', 'Almarai', sans-serif;
   color: var(--gray-800);
@@ -1036,7 +1036,7 @@ body {
   padding: 10px 14px;
   border: 1px solid var(--gray-200);
   border-radius: var(--radius-sm);
-  font-size: 14px;
+  font-size: calc(var(--text-scale, 1) * 14px);
   font-family: 'Poppins', sans-serif;
   --font-arabic: 'Tajawal', 'Almarai', sans-serif;
   color: var(--gray-800);
@@ -1070,7 +1070,7 @@ body {
   display: flex;
   align-items: center;
   gap: 10px;
-  font-size: 13px;
+  font-size: calc(var(--text-scale, 1) * 13px);
   font-weight: 500;
   transform: translateX(120%);
   transition: transform var(--transition-slow);
@@ -1095,7 +1095,7 @@ body {
   display: flex;
   align-items: center;
   gap: 6px;
-  font-size: 11px;
+  font-size: calc(var(--text-scale, 1) * 11px);
   font-weight: 500;
   padding: 6px 12px;
   border-radius: var(--radius-full);
@@ -1152,12 +1152,12 @@ body {
 }
 
 .empty-state .empty-icon {
-  font-size: 48px;
+  font-size: calc(var(--text-scale, 1) * 48px);
   margin-bottom: 16px;
 }
 
 .empty-state p {
-  font-size: 14px;
+  font-size: calc(var(--text-scale, 1) * 14px);
   margin-bottom: 20px;
 }
 
@@ -1213,7 +1213,7 @@ body {
   }
 
   .header-title {
-    font-size: 16px;
+    font-size: calc(var(--text-scale, 1) * 16px);
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -1238,11 +1238,11 @@ body {
   .status-card .status-icon {
     width: 40px;
     height: 40px;
-    font-size: 18px;
+    font-size: calc(var(--text-scale, 1) * 18px);
   }
 
   .status-card .status-info h3 {
-    font-size: 22px;
+    font-size: calc(var(--text-scale, 1) * 22px);
   }
 
   .lang-switcher {
@@ -1251,7 +1251,7 @@ body {
 
   .lang-btn {
     padding: 4px 6px;
-    font-size: 10px;
+    font-size: calc(var(--text-scale, 1) * 10px);
   }
 }
 
@@ -1269,7 +1269,7 @@ body {
   border: none;
   border-radius: var(--radius-full);
   background: transparent;
-  font-size: 11px;
+  font-size: calc(var(--text-scale, 1) * 11px);
   font-weight: 600;
   color: var(--gray-500);
   cursor: pointer;
@@ -1301,7 +1301,7 @@ body {
   display: flex;
   align-items: center;
   gap: 6px;
-  font-size: 12px;
+  font-size: calc(var(--text-scale, 1) * 12px);
   color: var(--gray-500);
 }
 
@@ -1325,14 +1325,14 @@ body {
 }
 
 .export-card h3 {
-  font-size: 14px;
+  font-size: calc(var(--text-scale, 1) * 14px);
   font-weight: 600;
   color: var(--sprix-navy);
   margin-bottom: 8px;
 }
 
 .export-card p {
-  font-size: 12px;
+  font-size: calc(var(--text-scale, 1) * 12px);
   color: var(--gray-500);
   margin-bottom: 16px;
 }
@@ -1385,7 +1385,7 @@ body {
 }
 
 .auth-title {
-  font-size: 18px;
+  font-size: calc(var(--text-scale, 1) * 18px);
   font-weight: 600;
   color: var(--gray-800);
   margin-bottom: 24px;
@@ -1393,7 +1393,7 @@ body {
 
 .auth-error {
   color: #ef4444;
-  font-size: 13px;
+  font-size: calc(var(--text-scale, 1) * 13px);
   margin-top: 8px;
   display: none;
 }
@@ -1437,20 +1437,20 @@ body {
 }
 
 .analytics-stat .stat-label {
-  font-size: 14px;
+  font-size: calc(var(--text-scale, 1) * 14px);
   font-weight: 500;
   color: var(--gray-600);
   margin-bottom: 12px;
 }
 
 .analytics-stat .stat-value {
-  font-size: 38px;
+  font-size: calc(var(--text-scale, 1) * 38px);
   font-weight: 700;
   line-height: 1;
 }
 
 .analytics-stat .stat-percent {
-  font-size: 13px;
+  font-size: calc(var(--text-scale, 1) * 13px);
   margin-top: 8px;
   opacity: 0.8;
   font-weight: 500;
@@ -1467,7 +1467,7 @@ body {
 }
 
 [dir="rtl"] .emp-name {
-  font-size: 22px !important;
+  font-size: calc(var(--text-scale, 1) * 22px);
   font-weight: 700;
   margin-bottom: 8px;
 }
@@ -1477,7 +1477,7 @@ body {
 }
 
 [dir="rtl"] .sidebar-title {
-  font-size: 14px;
+  font-size: calc(var(--text-scale, 1) * 14px);
   font-weight: 700;
 }
 
@@ -1563,11 +1563,11 @@ body {
 }
 
 body.text-large {
-  zoom: 1.15;
+  --text-scale: 1.15;
 }
 
 body.text-xlarge {
-  zoom: 1.25;
+  --text-scale: 1.25;
 }
 
 /* Firefox compatibility fallback */
@@ -1581,21 +1581,17 @@ body.text-xlarge {
   }
 
   body.text-large {
-    transform: scale(1.15);
-    transform-origin: top left;
-    width: 86.95%;
-  }
+  --text-scale: 1.15;
+}
 
   body.text-xlarge {
-    transform: scale(1.25);
-    transform-origin: top left;
-    width: 80%;
-  }
+  --text-scale: 1.25;
+}
 }
 
 .font-size-btn {
   font-family: 'Times New Roman', serif, 'Noto Serif', 'Noto Kufi Arabic';
-  font-size: 15px !important;
+  font-size: calc(var(--text-scale, 1) * 15px);
   font-weight: 700 !important;
 }
 /* =========================================
@@ -1637,14 +1633,14 @@ html[dir="rtl"] body {
 }
 
 html[dir="rtl"] .emp-name {
-  font-size: 20px !important;
+  font-size: calc(var(--text-scale, 1) * 20px);
   font-weight: 700 !important;
   line-height: 1.4 !important;
   margin-bottom: 8px !important;
 }
 
 html[dir="rtl"] .status-card h3 {
-  font-size: 32px !important;
+  font-size: calc(var(--text-scale, 1) * 32px);
   font-weight: 800 !important;
 }
 
@@ -1808,4 +1804,19 @@ body, html {
 }
 .dashboard-stats {
   max-width: 100% !important; /* Ensure the scrolling track itself is bound to the screen */
+}
+
+/* Phase 9.3: Sprix Brand Accent Stripe */
+.header {
+  position: relative;
+}
+.header::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: linear-gradient(90deg, var(--sprix-navy) 0%, var(--sprix-navy) 30%, var(--sprix-magenta) 100%);
+  z-index: 100;
 }
