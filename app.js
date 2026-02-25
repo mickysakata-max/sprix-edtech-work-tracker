@@ -299,17 +299,27 @@ function renderStatusCards() {
   let officeCount = 0;
   let remoteCount = 0;
   let leaveCount = 0;
+  let finishedCount = 0;
 
   state.employees.forEach(emp => {
     const record = todayData[emp.id];
     const status = record ? record.status : getDefaultStatus(emp);
 
     let isStarted = true;
+    let isFinished = false;
+
     if (status !== 'leave' && typeof getEgyptTimeMinutes === 'function') {
       const shiftText = getShiftString(record?.shift || getDefaultShift(emp));
       if (typeof shiftText === 'string') {
         const parts = shiftText.split('-');
         const startTimeStr = parts[0]?.trim();
+        const endTimeStr = parts[1]?.trim();
+
+        if (endTimeStr) {
+          const [hours, mins] = endTimeStr.split(':').map(Number);
+          if (!isNaN(hours) && !isNaN(mins) && currentMinutes >= hours * 60 + mins) isFinished = true;
+        }
+
         if (startTimeStr) {
           const [sHours, sMins] = startTimeStr.split(':').map(Number);
           if (!isNaN(sHours) && !isNaN(sMins) && currentMinutes < sHours * 60 + sMins) isStarted = false;
@@ -317,12 +327,17 @@ function renderStatusCards() {
       }
     }
 
-    if (status === 'leave') leaveCount++;
-    else if (!isStarted && (status === 'office' || status === 'remote')) {
-      // Do not count as active office/remote until shift strictly begins
+    if (status === 'leave') {
+      leaveCount++;
+    } else if (isFinished) {
+      finishedCount++;
+    } else if (!isStarted && (status === 'office' || status === 'remote')) {
+      // Not yet started
+    } else if (status === 'office') {
+      officeCount++;
+    } else if (status === 'remote') {
+      remoteCount++;
     }
-    else if (status === 'office') officeCount++;
-    else if (status === 'remote') remoteCount++;
   });
 
   const gt = document.getElementById('globalTotal');
@@ -333,6 +348,8 @@ function renderStatusCards() {
   if (gr) gr.textContent = remoteCount;
   const gl = document.getElementById('globalLeave');
   if (gl) gl.textContent = leaveCount;
+  const gf = document.getElementById('globalFinished');
+  if (gf) gf.textContent = finishedCount;
 }
 
 function getDefaultStatus(emp) {
