@@ -1820,3 +1820,55 @@ body, html {
   background: linear-gradient(90deg, var(--sprix-navy) 0%, var(--sprix-navy) 30%, var(--sprix-magenta) 100%);
   z-index: 100;
 }
+
+/* Phase 9.4 Feedback Adjustments */
+
+/* 1. Stacked Dual Stripes (Navy top, Magenta bottom) */
+.header::before {
+  height: 4px !important;
+  background: linear-gradient(180deg, var(--sprix-navy) 50%, var(--sprix-magenta) 50%) !important;
+}
+
+/* 2. High-Contrast Ramadan Section (Light Pink DB + Navy Text) */
+.ramadan-info {
+  background: var(--sprix-blossom) !important;
+  border: 1px solid rgba(0, 45, 114, 0.1) !important;
+}
+.ramadan-info .ramadan-label,
+.ramadan-info .ramadan-day,
+.ramadan-info .ramadan-day-label {
+  color: var(--sprix-navy) !important;
+  font-weight: 800 !important;
+  text-shadow: none !important; /* strip any dark mode text shadows */
+}
+[data-theme="dark"] .ramadan-info {
+  background: var(--sprix-magenta) !important;
+}
+[data-theme="dark"] .ramadan-info .ramadan-label,
+[data-theme="dark"] .ramadan-info .ramadan-day,
+[data-theme="dark"] .ramadan-info .ramadan-day-label {
+  color: var(--white) !important;
+}
+
+/* 3. Freeze Horizontal Scroll and Squish 5 Cards Natively */
+.dashboard-stats {
+  display: grid !important;
+  grid-template-columns: repeat(5, minmax(0, 1fr)) !important;
+  gap: 12px !important;
+  overflow-x: hidden !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+}
+.dashboard-stats .status-card {
+  min-width: 0 !important;
+  padding: 14px 12px !important;
+}
+.status-card .status-value {
+  font-size: calc(var(--text-scale, 1) * 24px) !important; /* slightly smaller to fit 5 col */
+}
+.status-card .status-label {
+  font-size: calc(var(--text-scale, 1) * 11px) !important;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
