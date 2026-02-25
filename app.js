@@ -307,11 +307,13 @@ function renderStatusCards() {
     let isStarted = true;
     if (status !== 'leave' && typeof getEgyptTimeMinutes === 'function') {
       const shiftText = getShiftString(record?.shift || getDefaultShift(emp));
-      const parts = shiftText.split('-');
-      const startTimeStr = parts[0]?.trim();
-      if (startTimeStr) {
-        const [sHours, sMins] = startTimeStr.split(':').map(Number);
-        if (currentMinutes < sHours * 60 + sMins) isStarted = false;
+      if (typeof shiftText === 'string') {
+        const parts = shiftText.split('-');
+        const startTimeStr = parts[0]?.trim();
+        if (startTimeStr) {
+          const [sHours, sMins] = startTimeStr.split(':').map(Number);
+          if (!isNaN(sHours) && !isNaN(sMins) && currentMinutes < sHours * 60 + sMins) isStarted = false;
+        }
       }
     }
 
@@ -374,16 +376,18 @@ function renderDashboard() {
       let isStarted = true;
       if (status !== 'leave') {
         const shiftText = getShiftString(record?.shift || getDefaultShift(emp));
-        const parts = shiftText.split('-');
-        const startTimeStr = parts[0]?.trim();
-        const endTimeStr = parts[1]?.trim();
-        if (endTimeStr) {
-          const [hours, mins] = endTimeStr.split(':').map(Number);
-          if (currentMinutes >= hours * 60 + mins) isFinished = true;
-        }
-        if (startTimeStr) {
-          const [sHours, sMins] = startTimeStr.split(':').map(Number);
-          if (currentMinutes < sHours * 60 + sMins) isStarted = false;
+        if (typeof shiftText === 'string') {
+          const parts = shiftText.split('-');
+          const startTimeStr = parts[0]?.trim();
+          const endTimeStr = parts[1]?.trim();
+          if (endTimeStr) {
+            const [hours, mins] = endTimeStr.split(':').map(Number);
+            if (!isNaN(hours) && !isNaN(mins) && currentMinutes >= hours * 60 + mins) isFinished = true;
+          }
+          if (startTimeStr) {
+            const [sHours, sMins] = startTimeStr.split(':').map(Number);
+            if (!isNaN(sHours) && !isNaN(sMins) && currentMinutes < sHours * 60 + sMins) isStarted = false;
+          }
         }
       }
 
@@ -579,17 +583,19 @@ function updateGlobalStats() {
     let isFinished = false;
     let isStarted = true;
     if (status !== 'leave') {
-      const shiftText = getShiftString(record?.shift || emp.defaultShift);
-      const parts = shiftText.split('-');
-      const startTimeStr = parts[0]?.trim();
-      const endTimeStr = parts[1]?.trim();
-      if (endTimeStr) {
-        const [hours, mins] = endTimeStr.split(':').map(Number);
-        if (currentMinutes >= hours * 60 + mins) isFinished = true;
-      }
-      if (startTimeStr) {
-        const [sHours, sMins] = startTimeStr.split(':').map(Number);
-        if (currentMinutes < sHours * 60 + sMins) isStarted = false;
+      const shiftText = getShiftString(record?.shift || getDefaultShift(emp));
+      if (typeof shiftText === 'string') {
+        const parts = shiftText.split('-');
+        const startTimeStr = parts[0]?.trim();
+        const endTimeStr = parts[1]?.trim();
+        if (endTimeStr) {
+          const [hours, mins] = endTimeStr.split(':').map(Number);
+          if (!isNaN(hours) && !isNaN(mins) && currentMinutes >= hours * 60 + mins) isFinished = true;
+        }
+        if (startTimeStr) {
+          const [sHours, sMins] = startTimeStr.split(':').map(Number);
+          if (!isNaN(sHours) && !isNaN(sMins) && currentMinutes < sHours * 60 + sMins) isStarted = false;
+        }
       }
     }
 
