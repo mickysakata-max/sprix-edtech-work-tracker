@@ -2027,28 +2027,27 @@ html {
   color: #ffffff !important;
 }
 
-/* 3. Freeze Horizontal Scroll and Squish 5 Cards Natively */
+/* 3. Freeze Horizontal Scroll and Squish 5 Cards Natively on Desktop */
 .dashboard-stats {
-  display: grid !important;
-  grid-template-columns: repeat(5, minmax(0, 1fr)) !important;
-  gap: 12px !important;
-  overflow-x: hidden !important;
-  margin-left: 0 !important;
-  margin-right: 0 !important;
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 12px;
+  margin-left: 0;
+  margin-right: 0;
 }
 
 .dashboard-stats .status-card {
-  min-width: 0 !important;
-  padding: 14px 12px !important;
+  min-width: 0;
+  padding: 14px 12px;
 }
 
 .status-card .status-value {
-  font-size: calc(var(--text-scale, 1) * 24px) !important;
+  font-size: calc(var(--text-scale, 1) * 24px);
   /* slightly smaller to fit 5 col */
 }
 
 .status-card .status-label {
-  font-size: calc(var(--text-scale, 1) * 11px) !important;
+  font-size: calc(var(--text-scale, 1) * 11px);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -2159,26 +2158,35 @@ html {
     overflow: visible !important;
   }
 
-  /* --- Dashboard Stats: Horizontal Scroll Row --- */
-  .dashboard-stats {
-    display: flex !important;
-    flex-wrap: nowrap !important;
-    overflow-x: auto !important;
-    overflow-y: hidden !important;
-    -webkit-overflow-scrolling: touch;
-    scroll-snap-type: x mandatory;
-    gap: 10px !important;
-    padding: 8px 4px 12px 4px !important;
-    margin-bottom: 16px !important;
-    position: static !important;
+  /* --- Authentication Screen: Stop Collapsing --- */
+  .auth-card {
+    width: 95% !important;
+    padding: 24px 16px !important;
   }
 
-  .dashboard-stats .status-card {
-    min-width: 130px !important;
-    max-width: 160px !important;
-    flex: 0 0 auto !important;
-    scroll-snap-align: start;
-    padding: 12px 10px !important;
+  .auth-logo-group>div:first-child span {
+    font-size: 22px !important;
+  }
+
+  .auth-logo-group img {
+    height: 20px !important;
+  }
+
+  .auth-logo-group>div:last-child {
+    font-size: 13px !important;
+  }
+
+  /* --- Dashboard Stats: Stack/Wrap on Mobile --- */
+  .dashboard-stats {
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 12px !important;
+    overflow-x: visible !important;
+  }
+
+  .dashboard-stats .status-card.total {
+    grid-column: 1 / -1 !important;
+    /* Total spans full width on mobile */
   }
 
   .status-card .status-icon {
