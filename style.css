@@ -2158,6 +2158,14 @@ html {
     overflow: visible !important;
   }
 
+  /* --- Application Layout Safety Net --- */
+  .app-layout,
+  body,
+  html {
+    overflow-x: hidden !important;
+    max-width: 100vw !important;
+  }
+
   /* --- Authentication Screen: Stop Collapsing --- */
   .auth-card {
     width: 95% !important;
@@ -2176,24 +2184,21 @@ html {
     font-size: 13px !important;
   }
 
-  /* --- Dashboard Stats: Stack/Wrap on Mobile --- */
+  /* --- Dashboard Stats: STRICT 5 COLUMNS BUT SCALED --- */
   .dashboard-stats {
     display: grid !important;
-    grid-template-columns: repeat(2, 1fr) !important;
-    gap: 12px !important;
-    overflow-x: visible !important;
+    grid-template-columns: repeat(5, minmax(0, 1fr)) !important;
+    gap: 4px !important;
+    /* Minimum gap */
+    overflow-x: hidden !important;
   }
 
-  .dashboard-stats .status-card.total {
-    grid-column: 1 / -1 !important;
-    /* Total spans full width on mobile */
+  .dashboard-stats .status-card {
+    padding: 8px 4px !important;
+    /* Aggressive miniaturization */
+    min-width: 0 !important;
   }
 
-  .status-card .status-icon {
-    width: 36px !important;
-    height: 36px !important;
-    font-size: 18px !important;
-  }
 
   .status-card .status-value {
     font-size: calc(var(--text-scale, 1) * 22px) !important;
@@ -2366,9 +2371,6 @@ html {
     padding: 3px 5px !important;
   }
 
-  .dashboard-stats .status-card {
-    min-width: 110px !important;
-  }
 
   .status-card .status-value {
     font-size: calc(var(--text-scale, 1) * 20px) !important;
