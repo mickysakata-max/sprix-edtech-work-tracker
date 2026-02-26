@@ -291,8 +291,7 @@ body {
   background-size: 85%;
   background-position: center bottom -15px;
   background-repeat: no-repeat;
-  opacity: 0.15;
-  mix-blend-mode: overlay;
+  opacity: 0.8;
   pointer-events: none;
   z-index: 0;
   transition: all 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
