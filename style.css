@@ -332,11 +332,7 @@ body {
   letter-spacing: -1.5px;
   line-height: 1;
   color: var(--text-main);
-  background: linear-gradient(180deg, var(--text-main) 0%, var(--sprix-navy) 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  filter: drop-shadow(2px 4px 8px rgba(27, 41, 75, 0.05));
+  filter: drop-shadow(2px 4px 8px rgba(27, 41, 75, 0.1));
 }
 
 .ramadan-info .ramadan-day-label {
