@@ -251,14 +251,14 @@ body {
 
 .ramadan-info:hover {
   transform: translateY(-4px) scale(1.02);
-  box-shadow: 0 16px 48px rgba(255, 0, 153, 0.15);
-  border-color: rgba(255, 255, 255, 0.3);
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.05));
+  box-shadow: 0 16px 48px rgba(212, 175, 55, 0.15);
+  border-color: rgba(255, 255, 255, 0.4);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0.05));
 }
 
 .ramadan-info:hover .ramadan-icon {
   transform: scale(1.1) rotate(5deg);
-  filter: drop-shadow(0 4px 8px rgba(255, 0, 153, 0.4));
+  filter: drop-shadow(0 4px 10px rgba(212, 175, 55, 0.5));
 }
 
 .ramadan-info .ramadan-icon {
@@ -273,27 +273,27 @@ body {
   left: 0;
   right: 0;
   height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.5), transparent);
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.6), transparent);
 }
 
 .ramadan-info .ramadan-icon {
   font-size: 28px;
-  color: var(--sprix-blossom);
-  background: linear-gradient(135deg, var(--white) 0%, var(--sprix-blossom) 100%);
+  color: #D4AF37;
+  background: linear-gradient(135deg, #FFF6D3 0%, #D4AF37 100%);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
   margin-bottom: 8px;
   display: inline-block;
   opacity: 0.95;
-  filter: drop-shadow(0 2px 4px rgba(255, 0, 153, 0.2));
+  filter: drop-shadow(0 2px 4px rgba(212, 175, 55, 0.25));
 }
 
 .ramadan-info .ramadan-label {
   font-size: calc(var(--text-scale, 1) * 10px);
   text-transform: uppercase;
   letter-spacing: 2.5px;
-  color: rgba(255, 255, 255, 0.85);
+  color: rgba(255, 255, 255, 0.9);
   margin-bottom: 4px;
   font-weight: 600;
 }
@@ -303,7 +303,7 @@ body {
   font-weight: 300;
   letter-spacing: -1.5px;
   line-height: 1.1;
-  background: linear-gradient(180deg, #ffffff 0%, #ffd1e3 100%);
+  background: linear-gradient(180deg, #FFFFFF 0%, #F0D582 100%);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
