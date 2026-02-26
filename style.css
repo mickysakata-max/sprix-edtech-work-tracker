@@ -63,32 +63,47 @@
 }
 
 body.dark-mode {
-  --white: #1e293b;
-  --gray-50: #0f172a;
-  --gray-100: #1e293b;
-  --gray-200: #334155;
-  --gray-300: #475569;
-  --gray-400: #64748b;
-  --gray-500: #94a3b8;
-  --gray-600: #cbd5e1;
-  --gray-700: #e2e8f0;
-  --gray-800: #f1f5f9;
+  --white: #071533;
+  /* Deep glass card backgrounds */
+  --gray-50: #02091c;
+  /* Main application lowest background layer */
+  --gray-100: #051433;
+  /* Base elevated surfaces */
+  --gray-200: #0a204d;
+  /* Borders / structural elements */
+  --gray-300: #163678;
+  /* UI component borders */
+  --gray-400: #2d559c;
+  /* Muted active icons */
+  --gray-500: #578bd6;
+  /* Subtitles / secondary text */
+  --gray-600: #8aaeee;
+  /* Secondary highly visible text */
+  --gray-700: #bad0f5;
+  /* Main text softer variant */
+  --gray-800: #ebf3ff;
+  /* High contrast primary body text */
   --gray-900: #ffffff;
+  /* Pure white headings */
 
-  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.2);
-  --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.3);
-  --shadow-lg: 0 12px 36px rgba(0, 0, 0, 0.4);
-  --shadow-xl: 0 24px 48px rgba(0, 0, 0, 0.5);
+  --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.5);
+  --shadow-lg: 0 16px 48px rgba(0, 0, 0, 0.6);
+  --shadow-xl: 0 24px 64px rgba(0, 0, 0, 0.7);
 
-  --status-office: #0a4bb3;
-  --status-remote: #ff33ad;
-  --status-leave: #94a3b8;
-  --status-finished: #64748b;
-  --status-office-bg: rgba(10, 75, 179, 0.4);
-  --status-remote-bg: rgba(255, 51, 173, 0.25);
-  --status-leave-bg: rgba(148, 163, 184, 0.15);
-  --status-finished-bg: rgba(148, 163, 184, 0.2);
-  --sprix-navy: #4b8df8;
+  --status-office: #4b8df8;
+  /* Brightened for dark mode pop */
+  --status-remote: #ff4db8;
+  /* Boosted magenta for dark mode pop */
+  --status-leave: #8aaeee;
+  --status-finished: #578bd6;
+  --status-office-bg: rgba(75, 141, 248, 0.15);
+  --status-remote-bg: rgba(255, 77, 184, 0.15);
+  --status-leave-bg: rgba(138, 174, 238, 0.1);
+  --status-finished-bg: rgba(87, 139, 214, 0.1);
+
+  --sprix-navy: #7eacff;
+  /* Inverse brighter navy for text legibility */
   --success: #10b981;
   --warning: #f59e0b;
 }
@@ -279,27 +294,35 @@ body {
   cursor: pointer;
 }
 
-/* Custom Qureo Character Watermark */
-.ramadan-info::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-image: url('qureo-watermark.png');
-  background-size: 85%;
-  background-position: center bottom -15px;
-  background-repeat: no-repeat;
-  opacity: 0.8;
-  pointer-events: none;
-  z-index: 0;
-  transition: all 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+/* Custom Qureo Character Hovering Over Card */
+.sidebar-footer {
+  position: relative;
 }
 
-.ramadan-info:hover::before {
-  transform: scale(1.05) rotate(2deg);
-  opacity: 0.25;
+.qureo-mascot {
+  position: absolute;
+  top: -65px;
+  right: -5px;
+  width: 140px;
+  height: 140px;
+  background-image: url('qureo-clean.png');
+  background-size: contain;
+  background-position: center bottom;
+  background-repeat: no-repeat;
+  opacity: 0.9;
+  pointer-events: none;
+  z-index: 50;
+  /* Overlaps the card */
+  transition: all 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+  filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.25));
+  /* Fades out the harsh "striped" aura naturally into the background */
+  -webkit-mask-image: radial-gradient(circle at center, rgba(0, 0, 0, 1) 50%, rgba(0, 0, 0, 0) 80%);
+  mask-image: radial-gradient(circle at center, rgba(0, 0, 0, 1) 50%, rgba(0, 0, 0, 0) 80%);
+}
+
+.sidebar-footer:hover .qureo-mascot {
+  transform: translateY(-8px) scale(1.05) rotate(3deg);
+  opacity: 1;
 }
 
 /* Ensure text stays above the watermark */
