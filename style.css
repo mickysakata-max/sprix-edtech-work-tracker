@@ -1218,6 +1218,7 @@ body {
   display: flex;
   flex-direction: column;
   gap: 8px;
+  pointer-events: none;
 }
 
 .toast {
@@ -1234,6 +1235,7 @@ body {
   transition: transform var(--transition-slow);
   min-width: 280px;
   border-left: 3px solid var(--sprix-navy);
+  pointer-events: auto;
 }
 
 .toast.show {
@@ -2346,9 +2348,11 @@ html {
 
   /* --- Toast Notifications --- */
   .toast-container {
+    top: auto !important;
     left: 12px !important;
     right: 12px !important;
     bottom: 12px !important;
+    pointer-events: none !important;
   }
 
   .toast {
