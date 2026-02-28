@@ -1750,7 +1750,7 @@ body.text-xlarge {
 /* Restore Horizontal Dashboard Stats */
 .dashboard-stats {
   display: grid !important;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)) !important;
+  grid-template-columns: repeat(5, minmax(0, 1fr)) !important;
   gap: 16px !important;
   margin-bottom: 24px !important;
   position: static !important;
@@ -1759,7 +1759,7 @@ body.text-xlarge {
 
 .dashboard-stats .status-card {
   flex: 1 !important;
-  min-width: 180px !important;
+  min-width: 0 !important;
 }
 
 /* Arabic Typography Revolution */
